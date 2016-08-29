@@ -1,6 +1,5 @@
 import requests
 import json
-from Login import Login
 
 class CuratedRestaurants(object):
 	"""docstring for Restaurants"""
