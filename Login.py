@@ -1,6 +1,5 @@
 import requests
 import json
-from pprint import pprint
 
 url = "https://api.doordash.com/v2/auth/token/"
 
@@ -19,6 +18,8 @@ authorizationHeader.append(response.json().get('token'))
 url = "https://api.doordash.com/v2/consumer/me/"
 
 headers = {'authorization': ''.join(authorizationHeader)}
+
+print(headers)
 
 response = requests.request("GET", url, headers=headers)
 
