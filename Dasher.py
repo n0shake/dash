@@ -1,4 +1,5 @@
 import requests
+from CuratedRestaurants import CuratedRestaurants
 
 class Dasher(object):
 	"""docstring for Login"""
@@ -23,17 +24,28 @@ class Dasher(object):
 			authorizationHeader = []
 			authorizationHeader.append("JWT ")
 			authorizationHeader.append(response.json().get('token'))
-			return ''.join(authorizationHeader)
+			self.generatedToken = ''.join(authorizationHeader)
 		else:
 			print response.reason
 
 	def fetchProfileInformation(self, username, password):
 
+		 self.authenticate(username, password)
+
 		 url = "https://api.doordash.com/v2/consumer/me/"
-		 headers = {'authorization': self.authenticate(username, password)}
+		 headers = {'authorization': self.generatedToken}
 		 response = requests.request("GET", url, headers=headers)
-		 
+
 		 return response.json().get('id')
 
+	def getReferrelDetails(self):
+
+		 url = "https://api.doordash.com/v2/consumer/me/referral_detail/"
+		 headers = {'authorization': self.generatedToken}
+		 response = requests.request("GET", url, headers=headers)
+
+		 return response.json()
+
 dasherObject = Dasher()
-dasherObject.fetchProfileInformation("cahsdasd", "ahdasdh")
+restaurantList = CuratedRestaurants(dasherObject.authenticate("asdasd", "sadasjkd"))
+restaurantList.getTheWholeList()
