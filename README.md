@@ -27,4 +27,4 @@ You'll need an DoorDash account with payment information added.
 
 # Future
 
-Well, how about ordering DoorDash from your Macbook's menu-bar? Or creating an [Insta-Boba](http://blog.doordash.com/post/149134308981/inside-doordash-hackathon-vi-hack-to-the-future) functionality? 
+I'll try to document the API as best as I can. How about ordering DoorDash from your menu-bar?
