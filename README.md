@@ -6,8 +6,6 @@
 
 Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs, and understanding how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
 
-Disclaimer: I'm a huge DoorDash fan and this is purely an activity out of curiosity and laziness.
-
 # Design
 
 Have been meaning to learn Python since quite some time, this gives me an opportunity to do that. Since this is a Python library, this is meant to be used in CLI environments. The API is really really rough around the edges, though I have tried to handle failing conditions gracefully.
