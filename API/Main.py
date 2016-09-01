@@ -4,8 +4,8 @@
 	
 	Get the authorization token; need to pass it around
 
+2. Get a list of suggestions
 
-Get the list of suggestions
 Select a suggestion
 Get a list of restaurants
 Select one restaurant

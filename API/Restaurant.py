@@ -24,7 +24,9 @@ class Restaurant(object):
 		itemNumber = 0
 		itemID = []
 
-		print("Restaurant status: "+data[0].get('status'))
+		if data[0].get('status') == "Closed":
+			print "The restaurant you have selected is currently closed"
+			return
 		
 		for category in data[0].get("menu_categories"): 
 			items = category["items"]
@@ -65,5 +67,4 @@ class Restaurant(object):
 			for order in currentOrder:
 				orderItem = order["order_items"]
 				for item in orderItem:
-					
-				print("You have ordered "+str(order["quantity"])+" of "+str(orderItem["name"])+" . Checkout ya delete?")
+					print("You have ordered "+str(order["quantity"])+" of "+str(orderItem["name"])+" . Checkout ya delete?")
