@@ -11,7 +11,7 @@ class test_login(unittest.TestCase):
 		self.assertNotEqual(self.dasherObject.generatedToken, None)
 
 	def test_referral_information(self):
-		referral_information = self.dasherObject.getReferrelDetails()
+		referral_information = self.dasherObject.getReferralDetails()
 		self.assertEqual(referral_information.get('referral_code'), "Abhishek-Banthia-7180")
 
 	def test_profile_information_fetch(self):

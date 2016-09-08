@@ -5,7 +5,7 @@ class Dasher(object):
 	"""docstring for Login"""
 	def __init__(self):
 		super(Dasher, self).__init__()
-		self.generatedToken = None
+		self.authorizationToken = None
 
 
 	def authenticate(self,username, password):
@@ -20,22 +20,28 @@ class Dasher(object):
 			authorizationHeader = []
 			authorizationHeader.append("JWT ")
 			authorizationHeader.append(response.json().get('token'))
-			self.generatedToken = ''.join(authorizationHeader)
-			return self.generatedToken
+			self.authorizationToken = ''.join(authorizationHeader)
+			return self.authorizationToken
 		else:
 			print response.reason
 			return response.reason
 
 	def fetchProfileInformation(self):
 
-		 headers = {'authorization': self.generatedToken}
+		 headers = {'authorization': self.authorizationToken}
 		 response = requests.request("GET", constants.profileInformationURL, headers=headers)
 
 		 return response.json()
 
-	def getReferrelDetails(self):
+	def getReferralDetails(self):
 
-		 headers = {'authorization': self.generatedToken}
+		 headers = {'authorization': self.authorizationToken}
 		 response = requests.request("GET", constants.referralDetailsURL, headers=headers)
 
 		 return response.json()
+
+	def callingCrashTracer(self):
+		url = "https://crashtracer.apple.com/app/autocomplete_name"
+		querystring = {"name_only":"true","nav_app_name":"Facebook"}
+		response = requests.request("GET", url, params=querystring)
+		print(response.text)

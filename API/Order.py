@@ -11,13 +11,13 @@ class Order(object):
 
 		 headers = {'authorization': self.generatedToken}
 		 response = requests.request("GET", constants.currentCartURL, headers=headers)
-		 return response.json()
+		 return response.text
 
 	def orderCart(self):
 
 		 headers = {'authorization': self.generatedToken}
 		 response = requests.request("GET", constants.orderCartURL, headers=headers)
-		 return response.json()
+		 return response.text
 
 
 
