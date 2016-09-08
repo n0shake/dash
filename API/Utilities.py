@@ -18,3 +18,5 @@ class Utilities(object):
 		latitude = response.json().get("latitude")
 		longitude = response.json().get("longitude")
 		return str(longitude),str(latitude)
+
+	

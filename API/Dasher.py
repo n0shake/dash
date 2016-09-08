@@ -11,10 +11,13 @@ class Dasher(object):
 	def authenticate(self,username, password):
 
 		payload = "{\"email\": \""+username+"\",\"password\" :\""+password+"\"}"
-
 		headers = {'accept': "application/json",'content-type': "application/json"}
 		
-		response = requests.request("POST", constants.authenticateURL, data=payload, headers=headers)
+		try:
+			response = requests.request("POST", constants.authenticateURL, data=payload, headers=headers)
+		except requests.exceptions.RequestException as e:
+			print e.cause
+			sys.exit(1)
 
 		if response.reason == "OK":
 			authorizationHeader = []
@@ -28,20 +31,22 @@ class Dasher(object):
 
 	def fetchProfileInformation(self):
 
-		 headers = {'authorization': self.authorizationToken}
-		 response = requests.request("GET", constants.profileInformationURL, headers=headers)
+		headers = {'authorization': self.authorizationToken}
+		try:
+		 	response = requests.request("GET", constants.profileInformationURL, headers=headers)
+		except requests.exceptions.RequestException as e:
+			print e.cause
+			sys.exit(1)
 
-		 return response.json()
+		return response.json()
 
 	def getReferralDetails(self):
 
-		 headers = {'authorization': self.authorizationToken}
-		 response = requests.request("GET", constants.referralDetailsURL, headers=headers)
+		headers = {'authorization': self.authorizationToken}
+		try:
+			response = requests.request("GET", constants.referralDetailsURL, headers=headers)
+		except requests.exceptions.RequestException as e:
+			print e.cause
+			sys.exit(1)
 
-		 return response.json()
-
-	def callingCrashTracer(self):
-		url = "https://crashtracer.apple.com/app/autocomplete_name"
-		querystring = {"name_only":"true","nav_app_name":"Facebook"}
-		response = requests.request("GET", url, params=querystring)
-		print(response.text)
+		return response.json()

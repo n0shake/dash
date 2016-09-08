@@ -11,8 +11,8 @@ def beginDashing():
 	dasherObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
 	listSuggestions(dasherObject.authorizationToken)
 
-def listSuggestions(authenticationToken):
-	suggestionObject = Suggestions(authenticationToken)
+def listSuggestions(authorizationToken):
+	suggestionObject = Suggestions(authorizationToken)
 	choices = suggestionObject.retrieveSuggestions()
 	headerArray = ["No", "What you'll like to order."]
 	suggestionArray = []
@@ -102,15 +102,12 @@ def listMenuForSelectedRestaurant(data, authorizationToken):
 		if special_instructions == "s":
 			special_instructions = ""
 
-		orderObject = Order(authorizationToken)
-		data = json.loads(orderObject.currentCart())
-		currentOrder = data.get("orders")
-		print currentOrder
-		for order in currentOrder:
-			orderItem = order["order_items"]
-			for item in orderItem:
-				itemObject = item["item"]
-				print("You have ordered "+str(item["quantity"])+" of "+str(itemObject["name"])+" . Checkout ya delete?")
+	# Add order to the current cart
+	# List the cart in a tabular format
+
+def listOrderCart(authorizationToken):
+	print "Let's print some order cart."
+
 
 if __name__ == "__main__":
 	beginDashing()

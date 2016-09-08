@@ -16,6 +16,11 @@ class Restaurant(object):
 
 		url = "https://api.doordash.com/v2/restaurant/"+str(self.restaurantID)+"/menu/"
 		headers = {'authorization': self.generatedToken}
-		response = requests.request("GET", url, headers=headers)
+		try:
+			response = requests.request("GET", url, headers=headers)
+		except:
+			print e.cause
+			sys.exit(1)
+
 		data = json.loads(response.text)
 		return data
