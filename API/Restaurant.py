@@ -1,8 +1,5 @@
 import requests
 import json
-from terminaltables import AsciiTable
-from Dasher import Dasher
-from Order import Order
 
 class Restaurant(object):
 	"""docstring for Restaurant"""

@@ -1,4 +1,4 @@
-from Dasher import Dasher
+from User import User
 from Suggestions import Suggestions
 from Restaurant import Restaurant
 from terminaltables import AsciiTable
@@ -7,9 +7,9 @@ import requests
 from Order import Order
 
 def beginDashing():
-	dasherObject = Dasher()
-	dasherObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
-	listSuggestions(dasherObject.authorizationToken)
+	userObject = User()
+	userObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
+	listSuggestions(userObject.authorizationToken)
 
 def listSuggestions(authorizationToken):
 	suggestionObject = Suggestions(authorizationToken)

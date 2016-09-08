@@ -1,10 +1,10 @@
 import requests
 import constants
 
-class Dasher(object):
+class User(object):
 	"""docstring for Login"""
 	def __init__(self):
-		super(Dasher, self).__init__()
+		super(User, self).__init__()
 		self.authorizationToken = None
 
 

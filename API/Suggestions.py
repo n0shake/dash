@@ -1,9 +1,6 @@
 import requests
 import constants
 import json
-from Dasher import Dasher
-from Restaurant import Restaurant
-from terminaltables import AsciiTable
 
 class Suggestions(object):
 	"""docstring for Suggestions"""
