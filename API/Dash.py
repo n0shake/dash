@@ -7,10 +7,9 @@ from Order import Order
 from Item import Item
 import sys
 
-
 class CurrentItem(object):
 	"""docstring for CurrentItem"""
-	def __init__(self, arg):
+	def __init__(self):
 		super(CurrentItem, self).__init__()
 		self.itemID = None
 		self.quantity = None
