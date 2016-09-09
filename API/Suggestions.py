@@ -5,13 +5,14 @@ import sys
 
 class Suggestions(object):
 	"""docstring for Suggestions"""
-	def __init__(self, token):
+	def __init__(self, token, currentLocation):
 		super(Suggestions, self).__init__()
 		self.authorizationToken = token
+		self.location = currentLocation
 
 	def listOfCuratedRestaurantsForCustomerID(self,customerID):
 	
-		querystring = {"consumer_id":customerID,"lat":"37.3896127","lng":"-121.9946316"}
+		querystring = {"consumer_id":customerID,"lat":self.location.latitude,"lng":self.location.longitude}
 		headers = {'accept': 'application/json','content-type': 'application/json','authorization' : self.authorization}
 		try:
 			response = requests.request("GET", constants.curatedCategoriesURL, headers=headers, params=querystring)
@@ -38,7 +39,7 @@ class Suggestions(object):
 
 	def listOfRestaurantsForSuggestion(self,suggestion):
 
-		querystring = {"lat":"37.3896127","limit":"200","lng":"-121.9946316","order_type":"asap","query":suggestion,"sort_boost":"0"}
+		querystring = {"lat":self.location.latitude,"limit":"200","lng":self.location.longitude,"order_type":"asap","query":suggestion,"sort_boost":"0"}
 		try:
 			response = requests.request("GET", constants.listForSuggestionURL, params=querystring)
 		except requests.exceptions.RequestException as e:
