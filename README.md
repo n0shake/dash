@@ -6,7 +6,7 @@
 
 # Major 🔑
 
-Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs, and also understanding how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
+Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs; I also wanted to understand how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
 
 # Design
 
