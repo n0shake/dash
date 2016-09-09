@@ -2,7 +2,7 @@
 
 # DoorDash-API
 
-**Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity and laziness.
+**Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity.
 
 # Major 🔑
 
