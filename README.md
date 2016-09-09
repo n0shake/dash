@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/abhishekbanthia/Dash.svg?token=Acx5xfwTcZkSxUpPzh9h&branch=master)
+![Build Status](https://travis-ci.com/abhishekbanthia/Dash.svg?token=Acx5xfwTcZkSxUpPzh9h&branch=master)
 
 # DoorDash-API
 
