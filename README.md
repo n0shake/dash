@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/abhishekbanthia/Dash.svg?token=Acx5xfwTcZkSxUpPzh9h&branch=master)
+
 # DoorDash-API
 
 **Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity and laziness.
