@@ -8,4 +8,4 @@ before_install:
   - pip install requests
 
 script: 
-  - python -m unittest discover
+  - python -m unittest discover; fi
