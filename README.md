@@ -6,7 +6,7 @@
 
 # Major 🔑
 
-Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs, and understanding how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
+Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs, and also understanding how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
 
 # Design
 
@@ -14,17 +14,15 @@ Have been meaning to learn Python since quite some time, this gives me an opport
 
 # Pre-requisites
 
-You'll need an DoorDash account with payment information added.
+You'll need an DoorDash account.
 
 # Using
 
 1. Authenticate to DoorDash using your credentials
-2. From the list of restaurants, select one (you can sort based on the rating, price, and the availability)
-3. The restaurant's beer menu will be displayed.
-4. Select the beer you'll like to order, the quantity, and mention any special instructions if you have any
-5. Confirm order, select the amount you'll to tip. Your default payment option will be used.
-6. You're set
+2. From the list of suggestions, select one (you can sort based on the rating, price, and the availability)
+3. A list of restaurants based on your suggestion will be displayed
+4. On selecting a restaurant, a menu will be displayed. Select the items you'll like to add to your cart, quantity, special instructions etc and you're set.
 
 # Future
 
-I'll try to document the API as best as I can. How about ordering DoorDash from your menu-bar?
+How about ordering DoorDash from your menubar?
