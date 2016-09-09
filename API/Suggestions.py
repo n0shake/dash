@@ -35,7 +35,7 @@ class Suggestions(object):
 		data = json.loads(response.text)
 		return data
 
-	def listOfHotelsForSuggestion(self,suggestion):
+	def listOfRestaurantsForSuggestion(self,suggestion):
 
 		querystring = {"lat":"37.3896127","limit":"200","lng":"-121.9946316","order_type":"asap","query":suggestion,"sort_boost":"0"}
 		try:
