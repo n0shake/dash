@@ -15,7 +15,7 @@ class test_restaurants(unittest.TestCase):
 	# Nirvana
 	def test_restaurant_2(self):
 		restaurantObject = Restaurant(2680, self.authorizationToken)
-		self.assertEquals(restaurantObject.getMenuAndOtherRestaurantDetails()[0].get('id'), 738)
+		self.assertEquals(restaurantObject.getMenuAndOtherRestaurantDetails()[0].get('id'), 3738)
 
 	def tearDown(self):
 		self.userObject = None
