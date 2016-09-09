@@ -8,4 +8,4 @@ before_install:
   - pip install requests
 
 script: 
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then python -m unittest discover; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then python -m unittest discover; f
