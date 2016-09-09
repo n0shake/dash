@@ -6,6 +6,8 @@ import requests
 from Order import Order
 from Item import Item
 import sys
+from docopt import docopt
+from geopy.geocoders import Nominatim
 
 class CurrentItem(object):
 	"""docstring for CurrentItem"""
@@ -26,6 +28,7 @@ class Dash(object):
 		self.restaurantID = None
 		self.currentSuggestion = None
 		self.currentItem = CurrentItem()
+		self.currentLocation = None
 
 	def beginDashing(self):
 		userObject = User()
@@ -34,7 +37,7 @@ class Dash(object):
 		self.findSuggestions()
 
 	def findSuggestions(self):
-		self.suggestionObject = Suggestions(self.authorizationToken)
+		self.suggestionObject = Suggestions(self.authorizationToken, self.currentLocation)
 		choices = self.suggestionObject.retrieveSuggestions()
 		self.listSuggestions(choices)
 		user_selection = self.promptUserWithMessage("Enter the number corresponding to what'll like to order: ")
@@ -169,13 +172,21 @@ class Dash(object):
 			table = AsciiTable(resultArray)
 			print table.table
 
-			self.substitution_preference = self.promptUserWithMessage("If the item is sold out, what's your prefence. Choose a number from the table above: ")
+			substitution_preference = self.promptUserWithMessage("If the item is sold out, what's your prefence. Choose a number from the table above: ")
 
-			if self.validateUserSelectionWithRange(self.substitution_preference, 1, 4) == False:
+			if self.validateUserSelectionWithRange(substitution_preference, 1, 4) == False:
 				print "Please select a valid number according to the table."
 				return
 
-			self.currentItem.substitution_preference = "refund"
+			if int(substitution_preference) == 1:
+				self.currentItem.substitution_preference = "contact"
+			elif int(substitution_preference) == 2:
+				self.currentItem.substitution_preference = "substitute"
+			elif int(substitution_preference) == 2:
+				self.currentItem.substitution_preference = "refund"
+			else:
+				self.currentItem.substitution_preference = "cancel"
+
 			self.currentItem.itemID = itemID[int(user_selection) - 1]
 			self.getOptionsForItem()
 
@@ -239,8 +250,7 @@ class Dash(object):
 	def addOrderToCart(self, options):
 
 		orderObject = Order(self.authorizationToken)
-		data = orderObject.addItemToOrder(self.restaurantID, self.currentItem.itemID,options, self.currentItem.quantity, self.currentItem.special_instructions, self.substitution_preference)
-
+		data = orderObject.addItemToOrder(self.restaurantID, self.currentItem.itemID,options, self.currentItem.quantity, self.currentItem.special_instructions, self.currentItem.substitution_preference)
 		self.showTheCurrentCart(data)
 
 	def showTheCurrentCart(self, data):
@@ -285,10 +295,12 @@ class Dash(object):
 			else:
 				self.findSuggestions()
 
-if __name__ == "__main__":
+def main():
+	geolocator = Nominatim()
 	dashObject = Dash()
+	dashObject.currentLocation = geolocator.geocode("650 Almanor Avenue Sunnyvale California")
 	dashObject.beginDashing()
-	# dashObject.getOptionsForItem(3248, 186619)
+
 
 
 
