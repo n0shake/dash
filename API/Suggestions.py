@@ -1,6 +1,7 @@
 import requests
 import constants
 import json
+import sys
 
 class Suggestions(object):
 	"""docstring for Suggestions"""

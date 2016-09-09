@@ -1,22 +1,22 @@
 import unittest
-from Dasher import Dasher
+from User import User
 
 class test_login(unittest.TestCase):
 	"""docstring for TestSuite"""
 	def setUp(self):
-		self.dasherObject = Dasher()
-		self.authenticationToken = self.dasherObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
+		self.dasherObject = User()
+		self.authorizationToken = self.dasherObject.authenticate("frodo.baggins16@yandex.com", "frodobaggins")
 
 	def test_shit(self):
-		self.assertNotEqual(self.dasherObject.generatedToken, None)
+		self.assertNotEqual(self.dasherObject.authorizationToken, None)
 
 	def test_referral_information(self):
 		referral_information = self.dasherObject.getReferralDetails()
-		self.assertEqual(referral_information.get('referral_code'), "Abhishek-Banthia-7180")
+		self.assertEqual(referral_information.get('referral_code'), "Frodo-Baggins-4089")
 
 	def test_profile_information_fetch(self):
 		profileInformation = self.dasherObject.fetchProfileInformation()
-		self.assertEqual(profileInformation.get('id'), 12607762)
+		self.assertEqual(profileInformation.get('id'), 13693354)
 
 	def tearDown(self):
 		self.dasherObject = None

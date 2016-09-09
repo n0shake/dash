@@ -1,27 +1,26 @@
 import unittest
-from Dasher import Dasher
+from User import User
 from Suggestions import Suggestions
 
 class test_suggestions(unittest.TestCase):
 	"""docstring for TestSuite"""
 	def setUp(self):
-		self.dasherObject = Dasher()
-		self.authenticationToken = self.dasherObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
+		userObject = User()
+		authorizationToken = userObject.authenticate("frodo.baggins16@yandex.com", "frodobaggins")
+		self.suggestionObject = Suggestions(authorizationToken)
 
-# dasherObject = Dasher()
-# dasherObject.authenticate("chelsea1712@gmail.com", "Abhi1712!")
-
-# restaurantSelected = suggestionObject.listOfHotelsForSuggestion("India")
-# restaurantObject = Restaurant(restaurantSelected,dasherObject.generatedToken)
-# restaurantObject.getMenuAndOtherRestaurantDetails()
-
+	def test_suggestions(self):
+		suggestions = self.suggestionObject.retrieveSuggestions()
+		comparingList = ["Mexican", "Sushi", "Indian", "Pizza", "Breakfast", "BBQ", "Chinese", "Thai", "Italian"]
+		self.assertItemsEqual(suggestions, comparingList)
 
 	def test_restaurantListForASuggestion(self):
-		suggestionObject = Suggestions(dasherObject.generatedToken)
-		self.assertNotEqual(self.dasherObject.generatedToken, None)
+		restList = self.suggestionObject.listOfRestaurantsForSuggestion("Sushi")
+		self.assertEquals(type(restList), list)
+
 
 	def tearDown(self):
-		self.dasherObject = None
+		self.userObject = None
 
 def main():
 	unittest.main()

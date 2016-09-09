@@ -1,5 +1,6 @@
 import requests
 import json
+import sys
 
 class Restaurant(object):
 	"""docstring for Restaurant"""

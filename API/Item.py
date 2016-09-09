@@ -1,6 +1,7 @@
 import requests
 import constants
 import json
+import sys
 
 class Item(object):
 	"""docstring for Item"""

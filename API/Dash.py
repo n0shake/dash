@@ -5,6 +5,18 @@ from terminaltables import AsciiTable
 import requests
 from Order import Order
 from Item import Item
+import sys
+
+
+class CurrentItem(object):
+	"""docstring for CurrentItem"""
+	def __init__(self, arg):
+		super(CurrentItem, self).__init__()
+		self.itemID = None
+		self.quantity = None
+		self.special_instructions = None
+		self.substitution_preference = None
+
 
 class Dash(object):
 	"""docstring for Dash"""
@@ -14,10 +26,7 @@ class Dash(object):
 		self.suggestionObject = None
 		self.restaurantID = None
 		self.currentSuggestion = None
-		self.currentItemID = None
-		self.currentItemQuantity = None
-		self.currentSpecialInstruction = None
-		self.substitutionPreference = None
+		self.currentItem = CurrentItem()
 
 	def beginDashing(self):
 		userObject = User()
@@ -44,7 +53,6 @@ class Dash(object):
 		isSelectionValid = True
 
 		if selection.isdigit() == False:
-			print "Please enter a valid digit."
 			return
 
 		if int(selection) < startRange or int(selection) > endRange:
@@ -66,7 +74,6 @@ class Dash(object):
 		print table.table
 
 	def findRestaurantsForSuggestion(self, suggestion):
-		print "Come inside findRestaurantsForSuggestion"
 		restaurantsList = self.suggestionObject.listOfRestaurantsForSuggestion(suggestion)
 		restaurantIDs = self.listRestaurants(restaurantsList)
 		user_restaurantSelection = self.promptUserWithMessage("Select a restaurant number to see the menu: ")
@@ -80,6 +87,7 @@ class Dash(object):
 		self.listMenuForSelectedRestaurant(data)	
 
 	def listRestaurants(self,data):
+
 			resultArray = []
 			headerArray = ["No","Name", "Description", "Address", "Delivery Fees", "Rating", "Price Range", "Promotion"]
 			restaurantIDs = []
@@ -93,7 +101,7 @@ class Dash(object):
 				restaurantDetails.append(restaurant["name"])
 				restaurantDetails.append(restaurant["description"])
 				restaurantDetails.append(restaurant["address"]["city"])
-				restaurantDetails.append(str(restaurant["delivery_fee"]/100 + 0.99) )
+				restaurantDetails.append(str(restaurant["delivery_fee"]/100.0) )
 				restaurantDetails.append(restaurant["composite_score"])
 				restaurantDetails.append(restaurant["price_range"])
 				restaurantDetails.append(restaurant["promotion"])
@@ -125,7 +133,7 @@ class Dash(object):
 				detailArray.append(str(itemNumber))
 				detailArray.append(item["name"])
 				detailArray.append(category["title"])
-				detailArray.append(str(item["price"]/100 + .99))
+				detailArray.append(str(item["price"]/100.0))
 				itemArray.append(detailArray)
 
 		table = AsciiTable(itemArray)
@@ -139,15 +147,15 @@ class Dash(object):
 		if user_selection == "q":
 			sys.exit(1)
 		else:
-			self.currentItemQuantity = self.promptUserWithMessage("How many quantities of the item would you like? ")
+			self.currentItem.quantity = self.promptUserWithMessage("How many quantities of the item would you like? ")
 
-			if self.currentItemQuantity.isdigit() == False:
+			if self.currentItem.quantity.isdigit() == False:
 				print "Quantity entered should be a number."
 				return
 
-			self.currentSpecialInstruction = self.promptUserWithMessage("If you have any special instructions, mention here or press s to skip: ")
-			if self.currentSpecialInstruction == "s":
-				self.currentSpecialInstruction = ""
+			self.currentItem.special_instructions = self.promptUserWithMessage("If you have any special instructions, mention here or press s to skip: ")
+			if self.currentItem.special_instructions == "s":
+				self.currentItem.special_instructions = ""
 
 			resultArray = []
 			headerArray = ["Number", "Substitution Preference"]
@@ -168,16 +176,16 @@ class Dash(object):
 				print "Please select a valid number according to the table."
 				return
 
-			self.substitution_preference = "refund"
-			self.itemID = itemID[int(user_selection) - 1]
+			self.currentItem.substitution_preference = "refund"
+			self.currentItem.itemID = itemID[int(user_selection) - 1]
 			self.getOptionsForItem()
 
 	def getOptionsForItem(self):
 
 		print "Getting options for the selected item"
 
-		itemObject = Item("JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmlnX2lhdCI6MTQ3MzM3MTkwNiwidXNlciI6eyJpc19zdGFmZiI6ZmFsc2UsImlkIjoxMjYyMDc5NCwiZW1haWwiOiJjaGVsc2VhMTcxMkBnbWFpbC5jb20ifSwiZXhwIjoxNDczMzkzNTA2fQ.8LIPuUXM2B0hsYL1tAWZLKvJGI7mT-PG0ODA6Vcx60k")
-		itemDetails = itemObject.getItemOptions(self.restaurantID, self.itemID)
+		itemObject = Item(self.authorizationToken)
+		itemDetails = itemObject.getItemOptions(self.restaurantID, self.currentItem.itemID)
 
 		self.listOptionsForItem(itemDetails)
 	
@@ -204,7 +212,7 @@ class Dash(object):
 					optionArray.append(option["title"])
 					optionArray.append(choice["name"])
 					optionArray.append(choice["description"])
-					optionArray.append(str(choice["price"] / 100))
+					optionArray.append(str(choice["price"] / 100.0))
 					tableArray.append(optionArray)
 				minimum_options = option["min_num_options"]
 
@@ -231,8 +239,8 @@ class Dash(object):
 
 	def addOrderToCart(self, options):
 
-		orderObject = Order("JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmlnX2lhdCI6MTQ3MzM3MTkwNiwidXNlciI6eyJpc19zdGFmZiI6ZmFsc2UsImlkIjoxMjYyMDc5NCwiZW1haWwiOiJjaGVsc2VhMTcxMkBnbWFpbC5jb20ifSwiZXhwIjoxNDczMzkzNTA2fQ.8LIPuUXM2B0hsYL1tAWZLKvJGI7mT-PG0ODA6Vcx60k")
-		data = orderObject.addItemToOrder(self.restaurantID, self.itemID,options, self.currentItemQuantity, self.currentSpecialInstruction, self.substitution_preference)
+		orderObject = Order(self.authorizationToken)
+		data = orderObject.addItemToOrder(self.restaurantID, self.currentItem.itemID,options, self.currentItem.quantity, self.currentItem.special_instructions, self.substitution_preference)
 
 		self.showTheCurrentCart(data)
 
@@ -250,7 +258,7 @@ class Dash(object):
 		itemData.append(item["name"])
 		itemData.append(data["quantity"])
 		itemData.append(data["special_instructions"])
-		itemData.append(item["price"])
+		itemData.append(int(item["price"]) /100.0)
 		tableData.append(itemData)
 			
 
@@ -278,12 +286,11 @@ class Dash(object):
 			else:
 				self.findSuggestions()
 
-
-
-
 if __name__ == "__main__":
 	dashObject = Dash()
 	dashObject.beginDashing()
 	# dashObject.getOptionsForItem(3248, 186619)
+
+
 
 			
