@@ -37,6 +37,18 @@ class Suggestions(object):
 		data = json.loads(response.text)
 		return data
 
+	def retrievePopularSuggestions(self):
+
+		querystring = {"extra":"popular_business_tags"}
+		try:
+			response = requests.request("GET", constants.suggestionsURL, params=querystring)
+		except requests.exceptions.RequestException as e:
+			print e.cause
+			sys.exit(1)
+
+		data = json.loads(response.text)
+		return data
+
 	def listOfRestaurantsForSuggestion(self,suggestion):
 
 		querystring = {"lat":self.location.latitude,"limit":"200","lng":self.location.longitude,"order_type":"asap","query":suggestion,"sort_boost":"0"}

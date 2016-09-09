@@ -21,7 +21,6 @@ class test_suggestions(unittest.TestCase):
 		restList = self.suggestionObject.listOfRestaurantsForSuggestion("Sushi")
 		self.assertEquals(type(restList), list)
 
-
 	def tearDown(self):
 		self.userObject = None
 

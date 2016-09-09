@@ -30,11 +30,15 @@ class Dash(object):
 		self.currentItem = CurrentItem()
 		self.currentLocation = None
 
-	def beginDashing(self):
+	def beginDashing(self, username, password):
 		userObject = User()
-		userObject.authenticate("frodo.baggins16@yandex.com", "frodobaggins")
+		userObject.authenticate(username, password)
 		self.authorizationToken = userObject.authorizationToken
-		self.findSuggestions()
+		if self.authorizationToken != None:
+			geolocator = Nominatim()
+			location = self.promptUserWithMessage("Please enter a location: ")
+			self.currentLocation = geolocator.geocode(location)
+			self.findSuggestions()
 
 	def findSuggestions(self):
 		self.suggestionObject = Suggestions(self.authorizationToken, self.currentLocation)
@@ -105,14 +109,24 @@ class Dash(object):
 				restaurantDetails.append(restaurant["address"]["city"])
 				restaurantDetails.append(str(restaurant["delivery_fee"]/100.0) )
 				restaurantDetails.append(restaurant["composite_score"])
-				restaurantDetails.append(restaurant["price_range"])
+				restaurantDetails.append(self.getDollarRepresentationForPriceRange(restaurant["price_range"]))
 				restaurantDetails.append(restaurant["promotion"])
 				restaurantIDs.append(restaurant["id"])
 				resultArray.append(restaurantDetails)
 
 			table = AsciiTable(resultArray)
 			print table.table
-			return restaurantIDs	
+			return restaurantIDs
+
+	def getDollarRepresentationForPriceRange(self,range):
+		if int(range) == 1:
+			return "$"
+		elif int(range) == 2:
+			return "$$"
+		elif int(range) == 3:
+			return "$$$"
+		else:
+			return "$$$$"
 
 	def listMenuForSelectedRestaurant(self,data):
 		headerArray = ["Number","Name", "Title","Price"]
@@ -296,12 +310,14 @@ class Dash(object):
 				self.findSuggestions()
 
 def main():
-	geolocator = Nominatim()
+	if len(sys.argv) <= 2:
+		print "Please enter your username and password seperated by space."
+		return
+
 	dashObject = Dash()
-	dashObject.currentLocation = geolocator.geocode("650 Almanor Avenue Sunnyvale California")
-	dashObject.beginDashing()
+	dashObject.beginDashing(str(sys.argv[1]), str(sys.argv[2]))
 
 
-
+main()
 
 			
