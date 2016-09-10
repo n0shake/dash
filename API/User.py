@@ -8,7 +8,6 @@ class User(object):
 		super(User, self).__init__()
 		self.authorizationToken = None
 
-
 	def authenticate(self,username, password):
 
 		payload = "{\"email\": \""+username+"\",\"password\" :\""+password+"\"}"

@@ -18,7 +18,8 @@ class Order(object):
 			print e.cause
 			sys.exit(1)
 		 
-		return response.text
+		data = json.loads(response.text)
+		return data
 
 	def orderCart(self):
 
@@ -29,7 +30,8 @@ class Order(object):
 			print e.cause
 			sys.exit(1)
 
-		return response.text
+		data = json.loads(response.text)
+		return data
 
 	def addItemToOrder(self, restaurantID, itemID, options, quantity, special_instructions, substitution_preference):
 

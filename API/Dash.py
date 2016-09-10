@@ -38,7 +38,10 @@ class Dash(object):
 			geolocator = Nominatim()
 			location = self.promptUserWithMessage("Please enter a location: ")
 			self.currentLocation = geolocator.geocode(location)
-			self.findSuggestions()
+			if self.currentLocation != None:
+				self.findSuggestions()
+			else:
+				print "Could not find information for the entered location."
 
 	def findSuggestions(self):
 		self.suggestionObject = Suggestions(self.authorizationToken, self.currentLocation)
@@ -137,6 +140,7 @@ class Dash(object):
 
 		if data[0].get('status') == "Closed":
 			print "The restaurant you have selected is currently closed. :("
+			self.findRestaurantsForSuggestion(self.currentSuggestion)
 			return
 		
 		for category in data[0].get("menu_categories"): 
@@ -264,7 +268,8 @@ class Dash(object):
 	def addOrderToCart(self, options):
 
 		orderObject = Order(self.authorizationToken)
-		data = orderObject.addItemToOrder(self.restaurantID, self.currentItem.itemID,options, self.currentItem.quantity, self.currentItem.special_instructions, self.currentItem.substitution_preference)
+		orderObject.addItemToOrder(self.restaurantID, self.currentItem.itemID,options, self.currentItem.quantity, self.currentItem.special_instructions, self.currentItem.substitution_preference)
+		data = orderObject.currentCart()
 		self.showTheCurrentCart(data)
 
 	def showTheCurrentCart(self, data):
@@ -274,17 +279,19 @@ class Dash(object):
 		headerArray = ["No" ,"Item Name", "Quantity", "Special Instructions", "Price"]
 		tableData.append(headerArray)
 
-		item = data["item"]
-		index = 0
-		itemData = []
-		itemData.append(index+1)
-		itemData.append(item["name"])
-		itemData.append(data["quantity"])
-		itemData.append(data["special_instructions"])
-		itemData.append(int(item["price"]) /100.0)
-		tableData.append(itemData)
-			
+		items = data["orders"][0].get("order_items")
 
+		for item in items:
+			itemDetails = item["item"]
+			index = 0
+			itemData = []
+			itemData.append(index+1)
+			itemData.append(itemDetails["name"])
+			itemData.append(item["quantity"])
+			itemData.append(item["special_instructions"])
+			itemData.append(int(item["single_price"]) /100.0)
+			tableData.append(itemData)
+			
 		table = AsciiTable(tableData)
 		print table.table
 

@@ -6,6 +6,7 @@ python:
 before_install:
   - pip install terminaltables
   - pip install requests
+  - pip install geopy
 
 script: 
   - python -m unittest discover \API;

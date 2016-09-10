@@ -22,3 +22,16 @@ class Item(object):
 		data = json.loads(response.text)
 		return data
 
+	def deleteItemFromCart(self, userID, itemID):
+
+		url = "https://api.doordash.com/v2/consumer/"+str(userID)+"/order/current_order/item/" + str(itemID)
+
+		headers = {
+    	'content-type': "application/json",
+   		'authorization': self.authorizationToken
+    	}
+	
+		response = requests.request("DELETE", url, data=payload, headers=headers)
+
+		data = json.loads(response.text)
+		return data
