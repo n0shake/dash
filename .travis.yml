@@ -9,4 +9,4 @@ before_install:
   - pip install geopy
 
 script: 
-  - python -m unittest discover \API;
+  - python -m unittest discover \Stuff;
