@@ -4,7 +4,11 @@
 
 **Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity.
 
-# Major 🔑
+![Screenshot](https://github.com/abhishekbanthia/dash/blob/master/Screenshot.png)
+
+[Link to Demo](https://asciinema.org/a/a6wfl2cfepory53795a2iq14b)
+
+# Why
 
 Ever since moving to the Bay Area, DoorDash has found a loyal customer in me. It's always fun reverse-engineering REST APIs; I also wanted to understand how DoorDash interacts with the Internet. Door Dash encrypts its network traffic using SSL, but this is really easy to get around using a simple Man-in-the-middle attack.
 
