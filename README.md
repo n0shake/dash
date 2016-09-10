@@ -2,7 +2,7 @@
 
 # Dash - Python Client to browse DoorDash from your command line
 
-**Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity.
+**Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity. This is a work in progress and I half-expect it to fail for certain input.
 
 ![Screenshot](https://github.com/abhishekbanthia/dash/blob/master/Screenshot.png)
 
@@ -26,6 +26,12 @@ Have been meaning to learn Python since quite some time, this gives me an opport
 # Pre-requisites
 
 You'll need an DoorDash account and DoorDash should be available at your location.
+
+# Features
+
+1. Browse restaurants based on your location and suggestion
+2. Check out the menu of the favorite restaurant
+3. Add items to the current cart
 
 # Using
 
