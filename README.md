@@ -1,12 +1,19 @@
 ![Build Status](https://travis-ci.com/abhishekbanthia/Dash.svg?token=Acx5xfwTcZkSxUpPzh9h&branch=master)
 
-# DoorDash-API
+# Dash - Python Client to browse DoorDash from your command line
 
 **Disclaimer**: I'm a huge DoorDash fan and this is purely an activity out of curiosity.
 
 ![Screenshot](https://github.com/abhishekbanthia/dash/blob/master/Screenshot.png)
 
 [Link to Demo](https://asciinema.org/a/a6wfl2cfepory53795a2iq14b)
+
+# Usage
+
+Build the Dash.py using your credentials and follow steps to add items to your cart.
+
+`$ python Dash.py frodo.baggins16@yandex.com frodobaggins`
+
 
 # Why
 
@@ -18,7 +25,7 @@ Have been meaning to learn Python since quite some time, this gives me an opport
 
 # Pre-requisites
 
-You'll need an DoorDash account.
+You'll need an DoorDash account and DoorDash should be available at your location.
 
 # Using
 
@@ -27,6 +34,3 @@ You'll need an DoorDash account.
 3. A list of restaurants based on your suggestion will be displayed
 4. On selecting a restaurant, a menu will be displayed. Select the items you'll like to add to your cart, quantity, special instructions etc and you're set.
 
-# Future
-
-How about ordering DoorDash from your menubar?
