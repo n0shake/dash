@@ -61,6 +61,9 @@ class Dash(object):
 	def validateUserSelectionWithRange(self, selection, startRange, endRange):
 		isSelectionValid = True
 
+		if str(selection) == 'q':
+			sys.exit(1)
+
 		if selection.isdigit() == False:
 			return
 
@@ -161,6 +164,9 @@ class Dash(object):
 
 		user_selection = self.promptUserWithMessage("You can add an item to the cart by entering a number or pressing q to quit: ")
 
+		self.addItem(user_selection, itemArray, itemID)
+
+	def addItem(self, user_selection, itemArray, itemID):
 		if self.validateUserSelectionWithRange(user_selection, 1, len(itemArray)) == False:
 			return
 
@@ -214,8 +220,9 @@ class Dash(object):
 
 		itemObject = Item(self.authorizationToken)
 		itemDetails = itemObject.getItemOptions(self.restaurantID, self.currentItem.itemID)
-
 		self.listOptionsForItem(itemDetails)
+
+
 	
 	def listOptionsForItem(self, data):
 
@@ -226,44 +233,57 @@ class Dash(object):
 		options = data.get('extras')
 
 		tableArray = []
-		headerArray = ["Number", "Title", "Type", "Description", "Price"]
+		headerArray = ["Number", "Title", "Type", "Description", "Price", "Optional"]
 		tableArray.append(headerArray)
 		choiceID = []
 		minimum_options = 0
 
+		index = 0
+
 		if options:
 			for option in options:
-				for index, choice in enumerate(option["options"]):
+				for choice in option["options"]:
 					optionArray = []
 					choiceID.append(choice["id"])
-					optionArray.append(index+1)
+					index+=1
+					optionArray.append(index)
 					optionArray.append(option["title"])
 					optionArray.append(choice["name"])
 					optionArray.append(choice["description"])
 					optionArray.append(str(choice["price"] / 100.0))
+					minimum_options = option["min_num_options"]
+					if int(minimum_options) == 0:
+						optionArray.append("Yes")
+					else:
+						optionArray.append("No")
 					tableArray.append(optionArray)
 				minimum_options = option["min_num_options"]
 
 		table = AsciiTable(tableArray)
 		print table.table
-		orderArray = []
 
 		if minimum_options == 1:
 			choice_selection = self.promptUserWithMessage("You need to select a minimum of one option to proceed forward: ")
-			if self.validateUserSelectionWithRange(choice_selection, 1, len(tableArray) - 1) == False:
-				print "Enter a valid selection"
-				return
-			orderArray.append(choiceID[int(choice_selection) - 1])
-			self.addOrderToCart(orderArray)
+			choice_selection_list = choice_selection.split(",")
+			self.addChoiceIDs(choice_selection_list, choiceID)
+
 		else:
-			choice_selection = self.promptUserWithMessage("You can add the above options or p to proceed: ")
+			choice_selection = self.promptUserWithMessage("You can add options or enter p to proceed: ")
 			if choice_selection == "p":
 				self.addOrderToCart([])
 			else:
-				orderArray.append(choiceID[int(choice_selection) - 1])
-				self.addOrderToCart(orderArray)
+				choice_selection_list = choice_selection.split(",")
+				self.addChoiceIDs(choice_selection_list, choiceID)
 
-
+	def addChoiceIDs(self,choice_selection_list, choiceID):
+		orderArray = []
+		for choice in choice_selection_list:
+			choice = choice.strip()
+			if self.validateUserSelectionWithRange(choice, 1, len(choiceID)) == False:
+				print "Enter a valid selection."
+				return
+			orderArray.append(choiceID[int(choice) - 1])
+		self.addOrderToCart(orderArray)
 
 	def addOrderToCart(self, options):
 
@@ -324,7 +344,5 @@ def main():
 	dashObject = Dash()
 	dashObject.beginDashing(str(sys.argv[1]), str(sys.argv[2]))
 
-
 main()
-
 			
