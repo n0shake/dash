@@ -10,7 +10,7 @@ from docopt import docopt
 from geopy.geocoders import Nominatim
 
 class CurrentItem(object):
-	"""docstring for CurrentItem"""
+
 	def __init__(self):
 		super(CurrentItem, self).__init__()
 		self.itemID = None
@@ -20,7 +20,7 @@ class CurrentItem(object):
 
 
 class Dash(object):
-	"""docstring for Dash"""
+	
 	def __init__(self):
 		super(Dash, self).__init__()
 		self.authorizationToken = None
@@ -321,11 +321,6 @@ class Dash(object):
 
 
 		next_step = self.promptUserWithMessage("What do you want to do next? : ")
-
-		# If the user wants to delete the whole cart, then show them the corresponding options here
-		# Show option to go look at the menu of the current restaurant
-		# Show option to go look at other restaurants for the current suggestion
-		# Show option to go look at the various suggestions
 
 		if self.validateUserSelectionWithRange(next_step, 1, 3) == True:
 			
